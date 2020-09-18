@@ -6,11 +6,11 @@ def hello_world():
     return 'Hello, World!'
 
 @app.route('/status')
-def hello_world():
+def get_status():
     return 'Hello, World!'
 
 @app.route('/change-mode')
-def hello_world():
+def put_mode():
     return 'Hello, World!'
 
 if __name__ == '__main__':
