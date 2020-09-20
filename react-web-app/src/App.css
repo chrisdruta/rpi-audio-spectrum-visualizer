@@ -1,5 +1,29 @@
+@import '~antd/dist/antd.css';
+
 .App {
+  background-color: whitesmoke;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   text-align: center;
+}
+
+.Flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 100%;
+  margin: 10px;
+}
+
+@media screen and (max-width: 1100px) {
+  .Flex-container {
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: hidden;
+  }
 }
 
 .App-logo {

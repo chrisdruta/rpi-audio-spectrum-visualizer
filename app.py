@@ -1,4 +1,5 @@
 from flask import Flask, request, Response
+from flask_cors import CORS
 from prometheus_flask_exporter import PrometheusMetrics
 
 from threading import Lock, Thread
@@ -13,7 +14,8 @@ thread = Thread(target=state_machine.start_loop)
 thread.start()
 
 app = Flask(__name__, static_folder="./react-web-app/build", static_url_path="/")
-metrics = PrometheusMetrics(app)
+CORS(app)
+PrometheusMetrics(app)
 
 @app.route("/")
 def index():
