@@ -10,15 +10,18 @@ class App extends React.Component {
     statusData: ""
   };
 
+  host = "http://raspberrypi:5000/controller"
+  //host = "http://localhost:5000/controller"
+
   handleRefreshStatus = () => {
-    fetch("http://localhost:5000/controller")
+    fetch(this.host)
       .then(res => res.json())
       .then(data => this.setState({statusData: JSON.stringify(data, null, 4)}))
       .catch(err => alert(err))
   }
 
   handleChangeMode = (mode) => {
-    fetch("http://localhost:5000/controller/mode", {
+    fetch(`${this.host}/mode`, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({state: mode})})
