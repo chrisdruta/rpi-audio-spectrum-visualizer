@@ -21,10 +21,7 @@ class App extends React.Component {
   }
 
   handleChangeMode = (mode) => {
-    fetch(`${this.host}/mode`, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({state: mode})})
+    fetch(`${this.host}/mode/${mode}`, { method: "PUT" })
       .then(res => {
         if (res.status !== 202)
           alert("Change mode failed.")
@@ -52,6 +49,8 @@ class App extends React.Component {
             <Button type="primary" onClick={() => this.handleChangeMode("idle")}>Change Mode Idle</Button>
             <p/>
             <Button type="primary" onClick={() => this.handleChangeMode("new")}>Change Mode New</Button>
+            <p/>
+            <Button type="primary" onClick={() => this.handleChangeMode("cava")}>Change Mode Cava</Button>
           </Card>
 
         </div>
