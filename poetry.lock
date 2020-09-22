@@ -1,5 +1,41 @@
 [[package]]
 category = "main"
+description = "CircuitPython APIs for non-CircuitPython versions of Python such as CPython on Linux and MicroPython."
+name = "adafruit-blinka"
+optional = false
+python-versions = ">=3.5.0"
+version = "5.4.0"
+
+[package.dependencies]
+Adafruit-PlatformDetect = ">=2.15.1"
+Adafruit-PureIO = ">=1.1.5"
+pyftdi = ">=0.40.0"
+
+[[package]]
+category = "main"
+description = "CircuitPython bus device classes to manage bus sharing."
+name = "adafruit-circuitpython-busdevice"
+optional = false
+python-versions = "*"
+version = "5.0.1"
+
+[package.dependencies]
+Adafruit-Blinka = "*"
+
+[[package]]
+category = "main"
+description = "CircuitPython library for WS2801 LEDs."
+name = "adafruit-circuitpython-ws2801"
+optional = false
+python-versions = "*"
+version = "0.10.2"
+
+[package.dependencies]
+Adafruit-Blinka = "*"
+adafruit-circuitpython-busdevice = "*"
+
+[[package]]
+category = "main"
 description = "Library to provide a cross-platform GPIO interface on the Raspberry Pi and Beaglebone Black using the RPi.GPIO and Adafruit_BBIO libraries."
 name = "adafruit-gpio"
 optional = false
@@ -9,6 +45,14 @@ version = "1.0.3"
 [package.dependencies]
 adafruit-pureio = "*"
 spidev = "*"
+
+[[package]]
+category = "main"
+description = "Platform detection for use by libraries like Adafruit-Blinka."
+name = "adafruit-platformdetect"
+optional = false
+python-versions = ">=3.5.0"
+version = "2.17.0"
 
 [[package]]
 category = "main"
@@ -123,6 +167,34 @@ prometheus_client = "*"
 
 [[package]]
 category = "main"
+description = "FTDI device driver (pure Python)"
+name = "pyftdi"
+optional = false
+python-versions = ">=3.5"
+version = "0.51.2"
+
+[package.dependencies]
+pyserial = ">=3.0"
+pyusb = ">=1.0.0"
+
+[[package]]
+category = "main"
+description = "Python Serial Port Extension"
+name = "pyserial"
+optional = false
+python-versions = "*"
+version = "3.4"
+
+[[package]]
+category = "main"
+description = "Python USB access module"
+name = "pyusb"
+optional = false
+python-versions = "*"
+version = "1.1.0"
+
+[[package]]
+category = "main"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
 optional = false
@@ -161,13 +233,25 @@ version = "0.35.1"
 test = ["pytest (>=3.0.0)", "pytest-cov"]
 
 [metadata]
-content-hash = "8d3af5cfb278ca1587e9cf028f8d475fae4b15ec4e96faeffd4c97b3780478c0"
+content-hash = "1f388990944bc4a99edc63599e1071839fee217e8b7a5e16d9ca6a530602f300"
 lock-version = "1.0"
 python-versions = "^3.8"
 
 [metadata.files]
+adafruit-blinka = [
+    {file = "Adafruit-Blinka-5.4.0.tar.gz", hash = "sha256:4563f16de6f76a342ca76b919c214fef03e750ebc591525ebe69b2a457554424"},
+]
+adafruit-circuitpython-busdevice = [
+    {file = "adafruit-circuitpython-busdevice-5.0.1.tar.gz", hash = "sha256:8d686bcfe1311ed39470e06121cea41c9c5675d958d52c861f612761d9674d88"},
+]
+adafruit-circuitpython-ws2801 = [
+    {file = "adafruit-circuitpython-ws2801-0.10.2.tar.gz", hash = "sha256:a98072bc6b25395606d0dcbaf276db271999408cd71abd03202950a9d4d2c4e2"},
+]
 adafruit-gpio = [
     {file = "Adafruit_GPIO-1.0.3.tar.gz", hash = "sha256:d6465b92c866c51ca8f3bc1e8f2ec36f5ccdb46d0fd54101c1109756d4a2dcd0"},
+]
+adafruit-platformdetect = [
+    {file = "Adafruit-PlatformDetect-2.17.0.tar.gz", hash = "sha256:944f2cc55b794e68a00559d0ce0cb2538042ebf0fe93921b2a183931c2e0cc4d"},
 ]
 adafruit-pureio = [
     {file = "Adafruit_PureIO-1.1.5.tar.gz", hash = "sha256:ebab172823f7249e02a644844a64e6dc2e4b3ded38ba42099068fd3e96623cfb"},
@@ -237,6 +321,17 @@ prometheus-client = [
 ]
 prometheus-flask-exporter = [
     {file = "prometheus_flask_exporter-0.17.0.tar.gz", hash = "sha256:0d2d29e641b59bda9e9fa66b9bf93a46e0b09b4cb538e76eb7eae175dfc749ce"},
+]
+pyftdi = [
+    {file = "pyftdi-0.51.2-py3-none-any.whl", hash = "sha256:6cacb8fe28491ee6d00b8d45e18f73ea539b31bcd785f5d8c80a60322297c007"},
+    {file = "pyftdi-0.51.2.tar.gz", hash = "sha256:02926258d5dfd28452a3d4d7c2f6d5bab722133b2885bde8b9e28bd2ccc095ca"},
+]
+pyserial = [
+    {file = "pyserial-3.4-py2.py3-none-any.whl", hash = "sha256:e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8"},
+    {file = "pyserial-3.4.tar.gz", hash = "sha256:6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627"},
+]
+pyusb = [
+    {file = "pyusb-1.1.0.tar.gz", hash = "sha256:d69ed64bff0e2102da11b3f49567256867853b861178689671a163d30865c298"},
 ]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},

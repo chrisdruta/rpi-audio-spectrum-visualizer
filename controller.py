@@ -12,8 +12,11 @@ from enum import Enum
 #import RPi.GPIO as GPIO
 
 # Import the WS2801 module.
-import Adafruit_WS2801
-import Adafruit_GPIO.SPI as SPI
+# import Adafruit_WS2801
+# import Adafruit_GPIO.SPI as SPI
+
+import board
+import adafruit_ws2801
 
 class StateMachine:
     def __init__(self, initial_state: State, wait: int = 0.1):
@@ -32,6 +35,10 @@ class StateMachine:
         # Alternatively specify a hardware SPI connection on /dev/spidev0.0:
         SPI_PORT   = 0
         SPI_DEVICE = 0
+
+        self.leds = adafruit_ws2801.WS2801(board.D2, board.D0, 64)
+        self.leds.fill((0x80, 0, 0))
+        #self.leds.show()
 
         #self.pixels = Adafruit_WS2801.WS2801Pixels(PIXEL_COUNT, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE), gpio=GPIO)
 
@@ -63,6 +70,12 @@ class States(Enum):
         return
 
     def new(state_machine: StateMachine):
+        while state_machine.current_state == States.new:
+            print("doing the thing")
+            time.sleep(1)
+        return
+
+    def pink(state_machine: StateMachine):
         while state_machine.current_state == States.new:
             print("doing the thing")
             time.sleep(1)
