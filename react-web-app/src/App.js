@@ -50,6 +50,8 @@ class App extends React.Component {
             <p/>
             <Button type="primary" onClick={() => this.handleChangeMode("new")}>Change Mode New</Button>
             <p/>
+            <Button type="primary" onClick={() => this.handleChangeMode("pink")}>Change Mode Pink</Button>
+            <p/>
             <Button type="primary" onClick={() => this.handleChangeMode("cava")}>Change Mode Cava</Button>
           </Card>
 
