@@ -25,7 +25,7 @@ class StateMachine:
 
 
         self.leds = adafruit_ws2801.WS2801(board.SCLK, board.MOSI, 64)
-        self.leds.fill((255, 182, 193, 1.0))
+        self.leds.fill((255, 0, 0))
 
 
     def start_loop(self):
@@ -112,6 +112,7 @@ class States(Enum):
                     break
                 # sample = [i for i in struct.unpack(fmt, data)]  # raw values without norming
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
-                print(sample)
+                for i, bin in enumerate(sample):
+                    self.leds[i] = (int(bin * 255), int(bin * 20), int(bin * 147))
         process.terminate()
         return
