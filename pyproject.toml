@@ -11,6 +11,8 @@ wheel = "^0.35.1"
 prometheus-flask-exporter = "^0.17.0"
 flask-cors = "^3.0.9"
 adafruit-circuitpython-ws2801 = "^0.10.2"
+numpy = "^1.19.2"
+sounddevice = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
 

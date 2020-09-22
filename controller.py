@@ -7,7 +7,10 @@ import struct
 import subprocess
 import time
 import tempfile
+
 from enum import Enum
+
+import sounddevice as sd
 
 import board
 import adafruit_ws2801
@@ -68,6 +71,12 @@ class States(Enum):
             time.sleep(1)
         return
 
+    def custom(state_machine: StateMachine):
+        with sd.Stream(channels=1) as stream:
+            idk = stream.read()
+            print(idk)
+
+
     def cava(state_machine: StateMachine):
 
         BARS_NUMBER = 32
@@ -81,7 +90,8 @@ class States(Enum):
         bars = %d
         [input]
         method = pulse
-        source = echoCancel_source
+        ;source = echoCancel_source
+        source = alsa_input.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00.analog-mono
         [output]
         channels = mono
         method = raw
@@ -115,6 +125,10 @@ class States(Enum):
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
                 for i, bin in enumerate(sample):
                     state_machine.pixels[i] = (int(bin * 255), int(bin * 20), int(bin * 147))
-                    self.pixels.show()
+                    state_machine.pixels.show()
         process.terminate()
         return
+
+if True:
+    state_machine = StateMachine(initial_state=States.custom)
+    state_machine.start_loop()
