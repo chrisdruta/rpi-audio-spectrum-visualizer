@@ -9,12 +9,6 @@ import time
 import tempfile
 from enum import Enum
 
-#import RPi.GPIO as GPIO
-
-# Import the WS2801 module.
-# import Adafruit_WS2801
-# import Adafruit_GPIO.SPI as SPI
-
 import board
 import adafruit_ws2801
 
@@ -29,18 +23,10 @@ class StateMachine:
         self.current_state = None
         self.wait = wait
 
-        # Configure the count of pixels:
-        PIXEL_COUNT = 32
 
-        # Alternatively specify a hardware SPI connection on /dev/spidev0.0:
-        SPI_PORT   = 0
-        SPI_DEVICE = 0
+        self.leds = adafruit_ws2801.WS2801(board.SCLK, board.MOSI, 64)
+        self.leds.fill((255, 182, 193, 1.0))
 
-        self.leds = adafruit_ws2801.WS2801(board.D2, board.D0, 64)
-        self.leds.fill((0x80, 0, 0))
-        #self.leds.show()
-
-        #self.pixels = Adafruit_WS2801.WS2801Pixels(PIXEL_COUNT, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE), gpio=GPIO)
 
     def start_loop(self):
         self.loop_thread.start()

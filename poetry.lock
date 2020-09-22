@@ -36,18 +36,6 @@ adafruit-circuitpython-busdevice = "*"
 
 [[package]]
 category = "main"
-description = "Library to provide a cross-platform GPIO interface on the Raspberry Pi and Beaglebone Black using the RPi.GPIO and Adafruit_BBIO libraries."
-name = "adafruit-gpio"
-optional = false
-python-versions = "*"
-version = "1.0.3"
-
-[package.dependencies]
-adafruit-pureio = "*"
-spidev = "*"
-
-[[package]]
-category = "main"
 description = "Platform detection for use by libraries like Adafruit-Blinka."
 name = "adafruit-platformdetect"
 optional = false
@@ -61,17 +49,6 @@ name = "adafruit-pureio"
 optional = false
 python-versions = ">=3.5.0"
 version = "1.1.5"
-
-[[package]]
-category = "main"
-description = "Python code to control WS2801 and similar SPI interface addressable RGB LED strips on a Raspberry Pi & BeagleBone Black."
-name = "adafruit-ws2801"
-optional = false
-python-versions = "*"
-version = "1.0.1"
-
-[package.dependencies]
-Adafruit-GPIO = ">=0.6.5"
 
 [[package]]
 category = "main"
@@ -203,14 +180,6 @@ version = "1.15.0"
 
 [[package]]
 category = "main"
-description = "Python bindings for Linux SPI access through spidev"
-name = "spidev"
-optional = false
-python-versions = "*"
-version = "3.5"
-
-[[package]]
-category = "main"
 description = "The comprehensive WSGI web application library."
 name = "werkzeug"
 optional = false
@@ -233,7 +202,7 @@ version = "0.35.1"
 test = ["pytest (>=3.0.0)", "pytest-cov"]
 
 [metadata]
-content-hash = "1f388990944bc4a99edc63599e1071839fee217e8b7a5e16d9ca6a530602f300"
+content-hash = "021aeccb80a6a85b6a19385db3310d9a25195d98f84bcd5c7e11deaee876f3e2"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -247,18 +216,11 @@ adafruit-circuitpython-busdevice = [
 adafruit-circuitpython-ws2801 = [
     {file = "adafruit-circuitpython-ws2801-0.10.2.tar.gz", hash = "sha256:a98072bc6b25395606d0dcbaf276db271999408cd71abd03202950a9d4d2c4e2"},
 ]
-adafruit-gpio = [
-    {file = "Adafruit_GPIO-1.0.3.tar.gz", hash = "sha256:d6465b92c866c51ca8f3bc1e8f2ec36f5ccdb46d0fd54101c1109756d4a2dcd0"},
-]
 adafruit-platformdetect = [
     {file = "Adafruit-PlatformDetect-2.17.0.tar.gz", hash = "sha256:944f2cc55b794e68a00559d0ce0cb2538042ebf0fe93921b2a183931c2e0cc4d"},
 ]
 adafruit-pureio = [
     {file = "Adafruit_PureIO-1.1.5.tar.gz", hash = "sha256:ebab172823f7249e02a644844a64e6dc2e4b3ded38ba42099068fd3e96623cfb"},
-]
-adafruit-ws2801 = [
-    {file = "Adafruit_WS2801-1.0.1-py2-none-any.whl", hash = "sha256:50b1ab1b975ca9e9574e48c6f4c60c9979bd2ed6cd651f7866dc995b0da29f9c"},
-    {file = "Adafruit_WS2801-1.0.1.tar.gz", hash = "sha256:328e5ccf673665943498de735fb510c868b94f97a220d81f6eea7d11600fa333"},
 ]
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
@@ -336,9 +298,6 @@ pyusb = [
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
     {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
-]
-spidev = [
-    {file = "spidev-3.5.tar.gz", hash = "sha256:8a7f5c289f161ea2ac4697fa8a10918232c990678dd0053084b3c43b1363910d"},
 ]
 werkzeug = [
     {file = "Werkzeug-1.0.1-py2.py3-none-any.whl", hash = "sha256:2de2a5db0baeae7b2d2664949077c2ac63fbd16d98da0ff71837f7d1dea3fd43"},

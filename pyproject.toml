@@ -7,7 +7,6 @@ authors = ["Your Name <you@example.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Flask = "^1.1.2"
-Adafruit-WS2801 = "^1.0.1"
 wheel = "^0.35.1"
 prometheus-flask-exporter = "^0.17.0"
 flask-cors = "^3.0.9"
