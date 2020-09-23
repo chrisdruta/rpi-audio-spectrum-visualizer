@@ -11,6 +11,7 @@ import tempfile
 from enum import Enum
 
 import sounddevice as sd
+import numpy as np
 
 import board
 import adafruit_ws2801
