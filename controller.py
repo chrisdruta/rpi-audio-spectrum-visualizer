@@ -71,7 +71,7 @@ class States(Enum):
             time.sleep(1)
         return
 
-     def custom(state_machine: StateMachine):
+    def custom(state_machine: StateMachine):
         CHUNK = 2048
         with sd.InputStream(channels=1, samplerate=44100, blocksize=CHUNK) as stream:
             while True:
