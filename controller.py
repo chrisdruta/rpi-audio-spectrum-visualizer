@@ -71,10 +71,21 @@ class States(Enum):
             time.sleep(1)
         return
 
-    def custom(state_machine: StateMachine):
-        with sd.Stream(channels=1) as stream:
-            idk = stream.read()
-            print(idk)
+     def custom(state_machine: StateMachine):
+        CHUNK = 2048
+        with sd.InputStream(channels=1, samplerate=44100, blocksize=CHUNK) as stream:
+            while True:
+                data = stream.read(CHUNK)[0]
+                fft_size = 64
+
+                magnitude = np.abs(np.fft.rfft(data.transpose(), n=fft_size)[0 : data.size // 2]).transpose()
+                #magnitude *= 10 / fft_size
+                #magnitude /= np.max(magnitude)
+
+                for i, mag in enumerate(magnitude):
+                    val = int(255 * mag)
+                    state_machine.pixels[i] = (val, val, val)
+                    state_machine.pixels.show()
 
 
     def cava(state_machine: StateMachine):
@@ -129,6 +140,6 @@ class States(Enum):
         process.terminate()
         return
 
-if True:
+if __name__ == '__main__':
     state_machine = StateMachine(initial_state=States.custom)
     state_machine.start_loop()
