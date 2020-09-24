@@ -6,7 +6,7 @@ from threading import Thread
 
 from controller import StateMachine, States
 
-state_machine = StateMachine(initial_state=States.pink)
+state_machine = StateMachine(initial_state=States.cava)
 state_machine.start_loop()
 
 app = Flask(__name__, static_folder='./react-web-app/build', static_url_path='/')
