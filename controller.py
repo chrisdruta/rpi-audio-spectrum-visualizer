@@ -72,7 +72,7 @@ class States(Enum):
             time.sleep(1)
         return
 
-    def custom(state_machine: StateMachine):
+    def custom_fft(state_machine: StateMachine):
         CHUNK = 2048
         with sd.InputStream(channels=1, samplerate=44100, blocksize=CHUNK) as stream:
             while True:
@@ -80,35 +80,39 @@ class States(Enum):
                 fft_size = 64
 
                 magnitude = np.abs(np.fft.rfft(data.transpose(), n=fft_size)[0 : data.size // 2]).transpose()
-                #magnitude *= 10 / fft_size
+                magnitude *= 2550 / fft_size
                 #magnitude /= np.max(magnitude)
 
                 for i, mag in enumerate(magnitude):
-                    val = int(255 * mag)
+                    val = int(mag)
                     state_machine.pixels[i] = (val, val, val)
-                    state_machine.pixels.show()
+                    state_machine.pixels[63-i] = (val, val, val)
+                state_machine.pixels.show()
 
 
     def cava(state_machine: StateMachine):
 
         BARS_NUMBER = 32
-        # OUTPUT_BIT_FORMAT = "8bit"
-        OUTPUT_BIT_FORMAT = '16bit'
+        OUTPUT_BIT_FORMAT = '8bit'
+        #OUTPUT_BIT_FORMAT = '16bit'
         # RAW_TARGET = "/tmp/cava.fifo"
         RAW_TARGET = '/dev/stdout'
 
         conpat = """
         [general]
         bars = %d
+        autosens = 0
         [input]
         method = pulse
-        ;source = echoCancel_source
-        source = alsa_input.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00.analog-mono
+        source = echoCancel_source
+        ;source = alsa_input.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00.analog-mono
         [output]
         channels = mono
         method = raw
         raw_target = %s
         bit_format = %s
+        [smoothing]
+        gravity = 100
         """
 
         config = conpat % (BARS_NUMBER, RAW_TARGET, OUTPUT_BIT_FORMAT)
@@ -136,11 +140,14 @@ class States(Enum):
                 # sample = [i for i in struct.unpack(fmt, data)]  # raw values without norming
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
                 for i, bin in enumerate(sample):
-                    state_machine.pixels[i] = (int(bin * 255), int(bin * 20), int(bin * 147))
-                    state_machine.pixels.show()
+                    val = int(bin * 255)
+                    state_machine.pixels[i] = (val, val, val)
+                    state_machine.pixels[63-i] = (val, val, val)
+                state_machine.pixels.show()
+
         process.terminate()
         return
 
 if __name__ == '__main__':
-    state_machine = StateMachine(initial_state=States.custom)
+    state_machine = StateMachine(initial_state=States.custom_fft)
     state_machine.start_loop()
