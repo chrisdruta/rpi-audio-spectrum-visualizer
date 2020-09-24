@@ -93,7 +93,7 @@ class States(Enum):
 
                 state_machine.pixels.fill(val)
                 state_machine.pixels.show()
-                time.sleep(0.1)
+
             time.sleep(1)
             for i in range(100):
                 lum += 0.001
@@ -102,7 +102,6 @@ class States(Enum):
 
                 state_machine.pixels.fill(val)
                 state_machine.pixels.show()
-                time.sleep(0.1)
         return
 
     def custom_fft(state_machine: StateMachine):
