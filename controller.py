@@ -93,7 +93,8 @@ class States(Enum):
 
                 state_machine.pixels.fill(val)
                 state_machine.pixels.show()
-                time.sleep(0.2)
+                time.sleep(0.4)
+            time.sleep(1)
             for i in range(40):
                 lum += 0.01
                 r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
@@ -101,7 +102,7 @@ class States(Enum):
 
                 state_machine.pixels.fill(val)
                 state_machine.pixels.show()
-                time.sleep(0.2)
+                time.sleep(0.4)
         return
 
     def custom_fft(state_machine: StateMachine):
