@@ -67,9 +67,15 @@ class States(Enum):
                 pos -= 170
                 return (0, pos * 3, 255 - pos * 3)
 
+        for i in range(len(state_machine.pixels)):
+            state_machine.pixels[i] = wheel(((i * 256 // len(state_machine.pixels))) % 256)
+        state_machine.pixels.show()
+
         while state_machine.current_state == States.idle:
-            for i in range(len(state_machine.pixels)):
-                state_machine.pixels[i] = wheel(((i * 256 // len(state_machine.pixels))) % 256)
+            first = state_machine.pixels[0]
+            for i in range(len(state_machine.pixels) - 1)
+                state_machine[i] = state_machine[i + 1]
+            state_machine.pixels[len(state_machine.pixels) - 1] = first
             state_machine.pixels.show()
             time.sleep(0.2)
         return
