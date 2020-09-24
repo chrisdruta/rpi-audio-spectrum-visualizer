@@ -84,7 +84,7 @@ class States(Enum):
         while state_machine.current_state == States.pink:
             for i in range(100):  # 100 breath levels
                 temp = i / 100
-                state_machine.pixels.fill((min(255,int(2*255*temp)), min(255,int(2*255*(1-temp))), 0)
+                state_machine.pixels.fill((min(255,int(2*255*temp)), min(255,int(2*255*(1-temp))), 0))
                 state_machine.pixels.show()
                 time.sleep(0.5)
         return
