@@ -84,7 +84,7 @@ class States(Enum):
         return
 
     def pink(state_machine: StateMachine):
-        hue, sat, lum = colorsys.rgb_to_hls(255/255, 20/255, 147/255)
+        hue, sat, lum = (328, 100, 44)
         while state_machine.current_state == States.pink:
             for i in range(30):
                 lum -= 0.01
