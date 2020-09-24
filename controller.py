@@ -29,7 +29,7 @@ class StateMachine:
         self.wait = wait
 
 
-        self.pixels = WS2801(board.SCLK, board.MOSI, 64, auto_write=False)
+        self.pixels = WS2801(board.SCLK, board.MOSI, 64, auto_write=False, baudrate=1000000)
         self.pixels.fill((255, 0, 0))
         self.pixels.show()
 

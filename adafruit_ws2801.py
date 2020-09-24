@@ -19,19 +19,14 @@ class WS2801:
 
     """
 
-    def __init__(self, clock, data, n, *, brightness=1.0, auto_write=True):
+    def __init__(self, clock, data, n, *, brightness=1.0, auto_write=False, baudrate=2000000):
         self._spi = None
-        try:
-            self._spi = busio.SPI(clock, MOSI=data)
-            while not self._spi.try_lock():
-                pass
-            self._spi.configure(baudrate=2000000)
-        except ValueError:
-            self.dpin = digitalio.DigitalInOut(data)
-            self.cpin = digitalio.DigitalInOut(clock)
-            self.dpin.direction = digitalio.Direction.OUTPUT
-            self.cpin.direction = digitalio.Direction.OUTPUT
-            self.cpin.value = False
+
+        self._spi = busio.SPI(clock, MOSI=data)
+        while not self._spi.try_lock():
+            pass
+        self._spi.configure(baudrate=baudrate)
+
         self._n = n
         self._buf = bytearray(n * 3)
         self._brightness = 1.0  ### keeps pylint happy
@@ -40,7 +35,7 @@ class WS2801:
         self.auto_write = False
         self.brightness = brightness
         self.auto_write = auto_write
-        ### TODO - review/consider adding GRB support like that in c++ version
+
 
     def deinit(self):
         """Blank out the DotStars and release the resources."""
@@ -48,11 +43,7 @@ class WS2801:
         black = (0, 0, 0)
         self.fill(black)
         self.show()
-        if self._spi:
-            self._spi.deinit()
-        else:
-            self.dpin.deinit()
-            self.cpin.deinit()
+        self._spi.deinit()
 
     def __enter__(self):
         return self
