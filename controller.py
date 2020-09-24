@@ -154,8 +154,8 @@ class States(Enum):
             hue, sat, lum = (start_hue/360, 1.0, 0.25)
             hue += i / BARS_NUMBER
             lum *= level
-            if hue > 1:
-                hue -= 1
+            # if hue > 1:
+            #     hue -= 1
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
             return ((int(r * 255), int(g * 255), int(b * 255)))
 
@@ -183,7 +183,7 @@ class States(Enum):
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
                 for i, level in enumerate(sample):
                     val = int(level * 255)
-                    state_machine.pixels[i] = get_bar_color(i, level, start_hue=320)
+                    state_machine.pixels[i] = get_bar_color(i, level, start_hue=270)
                     state_machine.pixels[state_machine.num_pixels - 1 - i] = get_bar_color(i, level)
                 state_machine.pixels.show()
 
