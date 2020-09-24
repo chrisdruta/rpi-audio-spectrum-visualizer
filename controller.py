@@ -184,7 +184,7 @@ class States(Enum):
                 for i, level in enumerate(sample):
                     val = int(level * 255)
                     state_machine.pixels[i] = get_bar_color(i, level, start_hue=270)
-                    state_machine.pixels[state_machine.num_pixels - 1 - i] = get_bar_color(i, level)
+                    state_machine.pixels[state_machine.num_pixels - 1 - i] = get_bar_color(i, level, start_hue=270)
                 state_machine.pixels.show()
 
         process.terminate()
