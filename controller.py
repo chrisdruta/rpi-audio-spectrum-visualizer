@@ -14,6 +14,8 @@ import colorsys
 import sounddevice as sd
 import numpy as np
 
+from colour import Color
+
 import board
 from adafruit_ws2801 import WS2801
 
@@ -82,16 +84,18 @@ class States(Enum):
         return
 
     def pink(state_machine: StateMachine):
-        hue, light, sat = (328, 100, 54) ## hot pink
+        hue, sat, light = Color('#FF69B4').hsl
         while state_machine.current_state == States.pink:
             for i in range(10):
-                sat -= 1
-                state_machine.pixels.fill(colorsys.hls_to_rgb())
+                light -= 0.01
+                r, g, b = Color(hsl=(hue, sat, light)).rgb
+                state_machine.pixels.fill((int(r), int(g), int(b)))
                 state_machine.pixels.show()
                 time.sleep(0.2)
-            for i in reversed(range(50)):
-                temp = i / 50
-                state_machine.pixels.fill((min(255,int(2*255*temp)), min(255,int(2*255*(1-temp))), 0))
+             for i in range(10):
+                light += 0.01
+                r, g, b = Color(hsl=(hue, sat, light)).rgb
+                state_machine.pixels.fill((int(r), int(g), int(b)))
                 state_machine.pixels.show()
                 time.sleep(0.2)
         return
