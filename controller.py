@@ -92,7 +92,7 @@ class States(Enum):
                 state_machine.pixels.fill((int(r), int(g), int(b)))
                 state_machine.pixels.show()
                 time.sleep(0.2)
-             for i in range(10):
+            for i in range(10):
                 light += 0.01
                 r, g, b = Color(hsl=(hue, sat, light)).rgb
                 state_machine.pixels.fill((int(r), int(g), int(b)))
