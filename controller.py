@@ -74,7 +74,7 @@ class States(Enum):
         while state_machine.current_state == States.idle:
             first = state_machine.pixels[0]
             for i in range(len(state_machine.pixels) - 1):
-                state_machine[i] = state_machine[i + 1]
+                state_machine.pixels[i] = state_machine.pixels[i + 1]
             state_machine.pixels[len(state_machine.pixels) - 1] = first
             state_machine.pixels.show()
             time.sleep(0.2)
