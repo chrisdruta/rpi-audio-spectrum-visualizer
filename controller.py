@@ -73,29 +73,26 @@ class States(Enum):
 
         while state_machine.current_state == States.idle:
             first = state_machine.pixels[0]
-            for i in range(len(state_machine.pixels) - 1)
+            for i in range(len(state_machine.pixels) - 1):
                 state_machine[i] = state_machine[i + 1]
             state_machine.pixels[len(state_machine.pixels) - 1] = first
             state_machine.pixels.show()
             time.sleep(0.2)
         return
 
-    def new(state_machine: StateMachine):
-        while state_machine.current_state == States.new:
-            print("doing the thing")
-            time.sleep(1)
-        return
-
     def pink(state_machine: StateMachine):
-        while state_machine.current_state == States.new:
-            print("doing the thing")
-            time.sleep(1)
+        while state_machine.current_state == States.pink:
+            for i in range(100):  # 100 breath levels
+                temp = i / 100
+                state_machine.pixels.fill((min(255,int(2*255*temp)), min(255,int(2*255*(1-temp))), 0)
+                state_machine.pixels.show()
+                time.sleep(0.5)
         return
 
     def custom_fft(state_machine: StateMachine):
         CHUNK = 2048
         with sd.InputStream(channels=1, samplerate=44100, blocksize=CHUNK) as stream:
-            while True:
+            while state_machine.current_state == States.custom_fft:
                 data = stream.read(CHUNK)[0]
                 fft_size = 64
 
@@ -108,7 +105,6 @@ class States(Enum):
                     state_machine.pixels[i] = (val, val, val)
                     state_machine.pixels[63-i] = (val, val, val)
                 state_machine.pixels.show()
-
 
     def cava(state_machine: StateMachine):
 
