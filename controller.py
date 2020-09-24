@@ -84,7 +84,7 @@ class States(Enum):
         return
 
     def pink(state_machine: StateMachine):
-        hue, sat, lum = Color('#FF69B4').hsl
+        hue, sat, lum = colorsys.rgb_to_hls(255/255, 20/255, 147/255)
         while state_machine.current_state == States.pink:
             for i in range(30):
                 lum -= 0.01
@@ -93,7 +93,7 @@ class States(Enum):
 
                 state_machine.pixels.fill(val)
                 state_machine.pixels.show()
-                time.sleep(0.1)
+                time.sleep(0.2)
             for i in range(30):
                 lum += 0.01
                 r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
@@ -101,7 +101,7 @@ class States(Enum):
 
                 state_machine.pixels.fill(val)
                 state_machine.pixels.show()
-                time.sleep(0.1)
+                time.sleep(0.2)
         return
 
     def custom_fft(state_machine: StateMachine):
