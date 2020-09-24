@@ -153,8 +153,11 @@ class States(Enum):
         def get_bar_color(i, level, start_hue = 0):
             hue, sat, lum = (start_hue/360, 1.0, 0.5)
             hue += i / BARS_NUMBER
+            lum *= level
+            if hue > 1:
+                hue -= 1
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
-            return ((int(r * 255 * level), int(g * 25 * level), int(b * 255 * level)))
+            return ((int(r * 255), int(g * 255), int(b * 255)))
 
 
         with tempfile.NamedTemporaryFile() as config_file:
