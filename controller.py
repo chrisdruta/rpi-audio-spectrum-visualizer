@@ -9,12 +9,13 @@ import time
 import tempfile
 
 from enum import Enum
+import colorsys
 
 import sounddevice as sd
 import numpy as np
 
 import board
-import adafruit_ws2801
+from adafruit_ws2801 import WS2801
 
 class StateMachine:
     def __init__(self, initial_state: State, wait: int = 0.1):
@@ -28,7 +29,7 @@ class StateMachine:
         self.wait = wait
 
 
-        self.pixels = adafruit_ws2801.WS2801(board.SCLK, board.MOSI, 64, auto_write=False)
+        self.pixels = WS2801(board.SCLK, board.MOSI, 64, auto_write=False)
         self.pixels.fill((255, 0, 0))
         self.pixels.show()
 
@@ -81,17 +82,18 @@ class States(Enum):
         return
 
     def pink(state_machine: StateMachine):
+        hue, light, sat = (328, 100, 54) ## hot pink
         while state_machine.current_state == States.pink:
-            for i in range(50):
-                temp = i / 50
-                state_machine.pixels.fill((min(255,int(2*255*temp)), min(255,int(2*255*(1-temp))), 0))
+            for i in range(10):
+                sat -= 1
+                state_machine.pixels.fill(colorsys.hls_to_rgb())
                 state_machine.pixels.show()
-                time.sleep(0.5)
+                time.sleep(0.2)
             for i in reversed(range(50)):
                 temp = i / 50
                 state_machine.pixels.fill((min(255,int(2*255*temp)), min(255,int(2*255*(1-temp))), 0))
                 state_machine.pixels.show()
-                time.sleep(0.5)
+                time.sleep(0.2)
         return
 
     def custom_fft(state_machine: StateMachine):

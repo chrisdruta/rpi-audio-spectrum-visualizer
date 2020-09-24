@@ -3,15 +3,12 @@ import math
 import busio
 import digitalio
 
-__version__ = "0.0.0-auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_WS2801.git"
-
-### based on https://github.com/adafruit/Adafruit_CircuitPython_DotStar
-
 
 class WS2801:
     """
     A sequence of WS2801 controlled LEDs.
+
+    Based on https://github.com/adafruit/Adafruit_CircuitPython_DotStar
 
     :param ~microcontroller.Pin clock: The pin to output dotstar clock on.
     :param ~microcontroller.Pin data: The pin to output dotstar data on.
@@ -20,20 +17,6 @@ class WS2801:
     :param bool auto_write: True if the dotstars should immediately change when
         set. If False, `show` must be called explicitly.
 
-
-    Example for Gemma M0:
-
-    .. code-block:: python
-
-        import adafruit_ws2801
-        import time
-        import board
-
-        darkred = 0x100000
-
-        with adafruit_ws2801.WS2801(board.D2, board.D0, 25, brightness=1.0) as pixels:
-            pixels[0] = darkred
-            time.sleep(2)
     """
 
     def __init__(self, clock, data, n, *, brightness=1.0, auto_write=True):
@@ -42,7 +25,7 @@ class WS2801:
             self._spi = busio.SPI(clock, MOSI=data)
             while not self._spi.try_lock():
                 pass
-            self._spi.configure(baudrate=1000 * 1000)
+            self._spi.configure(baudrate=2000000)
         except ValueError:
             self.dpin = digitalio.DigitalInOut(data)
             self.cpin = digitalio.DigitalInOut(clock)
