@@ -84,7 +84,7 @@ class States(Enum):
         return
 
     def pink(state_machine: StateMachine):
-        hue, sat, lum = (328, 100, 44)
+        hue, sat, lum = (328/360, 100/100, 44/100)
         while state_machine.current_state == States.pink:
             for i in range(30):
                 lum -= 0.01
