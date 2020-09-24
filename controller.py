@@ -56,8 +56,22 @@ class States(Enum):
         return [state for state in States.__dict__.keys() if not state.startswith("_")]
 
     def idle(state_machine: StateMachine):
+
+        def wheel(pos):
+            if pos < 85:
+                return (pos * 3, 255 - pos * 3, 0)
+            elif pos < 170:
+                pos -= 85
+                return (255 - pos * 3, 0, pos * 3)
+            else:
+                pos -= 170
+                return (0, pos * 3, 255 - pos * 3)
+
         while state_machine.current_state == States.idle:
-            time.sleep(0.5)
+            for i in range(len(state_machine.pixels)):
+                state_machine.pixels[i] = wheel(((i * 256 // len(state_machine.pixels))) % 256)
+            state_machine.pixels.show()
+            time.sleep(0.2)
         return
 
     def new(state_machine: StateMachine):
