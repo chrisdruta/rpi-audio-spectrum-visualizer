@@ -89,13 +89,17 @@ class States(Enum):
             for i in range(10):
                 lum -= 0.01
                 r, g, b = colorsys.hls_to_rgb(hue, sat, lum)
-                state_machine.pixels.fill((int(r), int(g), int(b)))
+                val = (int(r), int(g), int(b))
+                print(val)
+                state_machine.pixels.fill(print(val))
                 state_machine.pixels.show()
                 time.sleep(0.2)
             for i in range(10):
                 lum += 0.01
                 r, g, b = colorsys.hls_to_rgb(hue, sat, lum)
-                state_machine.pixels.fill((int(r * 255), int(g * 255), int(b * 255)))
+                val = (int(r), int(g), int(b))
+                print(val)
+                state_machine.pixels.fill(val)
                 state_machine.pixels.show()
                 time.sleep(0.2)
         return
