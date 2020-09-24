@@ -30,8 +30,8 @@ class StateMachine:
         self.current_state = None
         self.wait = wait
 
-
-        self.pixels = WS2801(board.SCLK, board.MOSI, 64, auto_write=False, baudrate=1000000)
+        self.num_pixels = 64
+        self.pixels = WS2801(board.SCLK, board.MOSI, self.num_pixels, auto_write=False, baudrate=1000000)
         self.pixels.fill((255, 0, 0))
         self.pixels.show()
 
@@ -79,6 +79,7 @@ class States(Enum):
             for i in range(len(state_machine.pixels) - 1):
                 state_machine.pixels[i] = state_machine.pixels[i + 1]
             state_machine.pixels[len(state_machine.pixels) - 1] = first
+
             state_machine.pixels.show()
             time.sleep(0.2)
         return
@@ -123,7 +124,7 @@ class States(Enum):
 
     def cava(state_machine: StateMachine):
 
-        BARS_NUMBER = 32
+        BARS_NUMBER = int(state_machine.num_pixels / 2)
         OUTPUT_BIT_FORMAT = '8bit'
         #OUTPUT_BIT_FORMAT = '16bit'
         # RAW_TARGET = "/tmp/cava.fifo"
@@ -145,9 +146,16 @@ class States(Enum):
         [smoothing]
         gravity = 100
         """
-
         config = conpat % (BARS_NUMBER, RAW_TARGET, OUTPUT_BIT_FORMAT)
         bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
+
+
+        def get_bar_color(i, level, start_hue = 0):
+            hue, sat, lum = (start_hue/360, 1.0, 0.5)
+            hue += i / BARS_NUMBER
+            r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
+            return ((int(r * 255 * level), int(g * 25 * level), int(b * 255 * level)))
+
 
         with tempfile.NamedTemporaryFile() as config_file:
             config_file.write(config.encode())
@@ -170,10 +178,10 @@ class States(Enum):
                     break
                 # sample = [i for i in struct.unpack(fmt, data)]  # raw values without norming
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
-                for i, bin in enumerate(sample):
-                    val = int(bin * 255)
-                    state_machine.pixels[i] = (val, val, val)
-                    state_machine.pixels[63-i] = (val, val, val)
+                for i, level in enumerate(sample):
+                    val = int(level * 255)
+                    state_machine.pixels[i] = get_bar_color(i, level)
+                    state_machine.pixels[state_machine.num_pixels - 1 - i] = (val, val, val)
                 state_machine.pixels.show()
 
         process.terminate()
