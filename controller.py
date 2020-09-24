@@ -90,7 +90,10 @@ class States(Enum):
                 lum -= 0.01
                 r, g, b = colorsys.hls_to_rgb(hue, sat, lum)
                 val = (int(r * 255), int(g * 255), int(b * 255))
+                print(hue, sat, lum)
+                print(r, g, b)
                 print(val)
+
                 state_machine.pixels.fill(val)
                 state_machine.pixels.show()
                 time.sleep(0.2)
@@ -98,7 +101,10 @@ class States(Enum):
                 lum += 0.01
                 r, g, b = colorsys.hls_to_rgb(hue, sat, lum)
                 val = (int(r * 255), int(g * 255), int(b * 255))
+                print(hue, sat, lum)
+                print(r, g, b)
                 print(val)
+
                 state_machine.pixels.fill(val)
                 state_machine.pixels.show()
                 time.sleep(0.2)
