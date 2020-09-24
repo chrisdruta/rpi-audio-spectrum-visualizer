@@ -151,7 +151,7 @@ class States(Enum):
 
 
         def get_bar_color(i, level, start_hue = 0):
-            hue, sat, lum = (start_hue/360, 1.0, 0.5)
+            hue, sat, lum = (start_hue/360, 1.0, 0.25)
             hue += i / BARS_NUMBER
             lum *= level
             if hue > 1:
@@ -183,7 +183,7 @@ class States(Enum):
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
                 for i, level in enumerate(sample):
                     val = int(level * 255)
-                    state_machine.pixels[i] = get_bar_color(i, level)
+                    state_machine.pixels[i] = get_bar_color(i, level, start_hue=320)
                     state_machine.pixels[state_machine.num_pixels - 1 - i] = get_bar_color(i, level)
                 state_machine.pixels.show()
 
