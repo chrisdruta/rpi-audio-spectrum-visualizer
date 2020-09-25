@@ -3,15 +3,18 @@ import React from 'react';
 import './App.css';
 
 import { Button, Card, Input, Typography } from 'antd';
+import ReactJson from 'react-json-view'
 
 class App extends React.Component {
 
   state = {
-    statusData: ""
+    statusData: "",
+    cavaConfig: {bruh: "bruh"}
   };
 
-  host = "http://raspberrypi:5000/controller"
+  //host = "http://raspberrypi:5000/controller"
   //host = "http://localhost:5000/controller"
+  host = "192.168.1.12:5000/controller";
 
   handleRefreshStatus = () => {
     fetch(this.host)
@@ -48,11 +51,12 @@ class App extends React.Component {
           <Card title="Control" style={{ width: 500 }}>
             <Button type="primary" onClick={() => this.handleChangeMode("idle")}>Change Mode Idle</Button>
             <p/>
-            <Button type="primary" onClick={() => this.handleChangeMode("new")}>Change Mode New</Button>
-            <p/>
             <Button type="primary" onClick={() => this.handleChangeMode("pink")}>Change Mode Pink</Button>
             <p/>
             <Button type="primary" onClick={() => this.handleChangeMode("cava")}>Change Mode Cava</Button>
+            <p/>
+            <Typography.Paragraph strong>Cava Config</Typography.Paragraph>
+            <ReactJson src={ this.state.cavaConfig } onEdit={(edit) => true} displayDataTypes={false} name={null} theme="ocean" style={{textAlign: "left"}}/>
           </Card>
 
         </div>

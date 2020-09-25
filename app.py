@@ -31,6 +31,8 @@ def change_mode(mode: str):
         return Response("Missing mode in uri path (/controller/mode/<mode>)")
     if mode in States._names():
         state_machine.command_queue.put(States.__dict__[mode])
+        # if mode == 'cava' and body := request.json():
+        #     print(body)
         return Response(status=202)
     return Response(status=400)
 
