@@ -14,7 +14,7 @@ class App extends React.Component {
 
   //host = "http://raspberrypi:5000/controller"
   //host = "http://localhost:5000/controller"
-  host = "192.168.1.12:5000/controller";
+  host = "http://192.168.1.12:5000/controller";
 
   handleRefreshStatus = () => {
     fetch(this.host)
