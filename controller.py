@@ -140,7 +140,7 @@ class States:
         conpat = """
         [general]
         bars = %d
-        autosens = 1
+        autosens = 0
         ; higher_cutoff_freq = 10000
         higher_cutoff_freq = 7000
         [input]
