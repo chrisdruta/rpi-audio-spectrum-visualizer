@@ -173,7 +173,7 @@ class States:
             r, g, b = colorsys.hsv_to_rgb(hue, sat, val)
             return ((int(r * 255), int(g * 255), int(b * 255)))
 
-        def sat_range(i, level, lum=0.25, hue=0, start_sat = 100, end_sat=0):
+        def sat_range(i, level, lum=0.25, hue=0, start_sat = 130, end_sat=0):
             hue, sat, lum = (hue/360, start_sat/100, lum)
             lum *= level
 
@@ -209,7 +209,7 @@ class States:
                 # sample = [i for i in struct.unpack(fmt, data)]  # raw values without norming
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
                 for i, level in enumerate(sample):
-                    val = get_bar_color(i, level, val=0.5, start_hue=0, end_hue=360)
+                    val = get_bar_color(i, level, val=0.5, start_hue=300, end_hue=125)
                     #val = sat_range(i, level, lum=0.25, hue=250, start_sat = 100, end_sat=0)
                     state_machine.pixels[i] = val
                     state_machine.pixels[state_machine.num_pixels - 1 - i] = val
