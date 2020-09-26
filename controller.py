@@ -30,7 +30,7 @@ class StateMachine:
         self.current_state = None
         self.wait = wait
 
-        self.num_pixels = 64
+        self.num_pixels = 54
         self.pixels = WS2801(board.SCLK, board.MOSI, self.num_pixels, auto_write=False, baudrate=1000000)
         self.pixels.fill((255, 0, 0))
         self.pixels.show()
