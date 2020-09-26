@@ -140,7 +140,7 @@ class States:
         conpat = """
         [general]
         bars = %d
-        autosens = 0
+        autosens = 1
         [input]
         method = pulse
         source = echoCancel_source
