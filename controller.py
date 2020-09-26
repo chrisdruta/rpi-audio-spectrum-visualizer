@@ -172,6 +172,7 @@ class States:
                 hue -= 1
 
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
+            print(f"rgb: {(r, g, b)}")
             return ((int(r * 255), int(g * 255), int(b * 255)))
 
         def sat_range(i, level, lum=0.25, hue=0, start_sat = 0, end_sat=100):
