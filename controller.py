@@ -168,7 +168,6 @@ class States:
 
             hue += i / BARS_NUMBER * hue_delta / 360
             if hue > 1:
-                print(f"hue over: {hue}")
                 hue -= 1
 
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
