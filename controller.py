@@ -159,7 +159,7 @@ class States:
         bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
 
         def hue_range(i, level, lum=0.25, start_hue = 0, end_hue=360):
-            hue, sat, lum = (start_hue/360, 1.0, lum)
+            hue, sat, lum = (start_hue/360, 0.5, lum)
             lum *= level
 
             hue_delta = end_hue - start_hue
@@ -183,8 +183,6 @@ class States:
             
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
             return ((int(r * 255), int(g * 255), int(b * 255)))
-
-            
 
         if state_machine.cava_mode == "between-hues":
             get_bar_color = hue_range
