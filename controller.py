@@ -159,7 +159,7 @@ class States:
         bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
 
         def hue_range(i, level, lum=0.25, start_hue = 0, end_hue=360):
-            hue, sat, lum = (start_hue/360, start_hue, 0.25)
+            hue, sat, lum = (start_hue/360, 1.0, 0.25)
             lum *= level
 
             hue_delta = end_hue - start_hue
@@ -172,7 +172,6 @@ class States:
                 hue -= 1
 
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
-            print(f"rgb: {(r, g, b)}")
             return ((int(r * 255), int(g * 255), int(b * 255)))
 
         def sat_range(i, level, lum=0.25, hue=0, start_sat = 0, end_sat=100):
