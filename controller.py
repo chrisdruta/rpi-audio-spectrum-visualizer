@@ -158,9 +158,8 @@ class States:
         config = conpat % (BARS_NUMBER, RAW_TARGET, OUTPUT_BIT_FORMAT)
         bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
 
-
         def hue_range(i, level, lum=0.25, start_hue = 0, end_hue=360):
-            hue, sat, lum = (start_hue/360, 1.0, 0.25)
+            hue, sat, lum = (start_hue/360, start_hue, 0.25)
             lum *= level
 
             hue_delta = end_hue - start_hue
@@ -168,9 +167,29 @@ class States:
                 hue_delta += 360
 
             hue += i / BARS_NUMBER * hue_delta / 360
+            if hue > 1:
+                print("hue over")
+                hue -= 1
 
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
             return ((int(r * 255), int(g * 255), int(b * 255)))
+
+        def sat_range(i, level, lum=0.25, hue=0, start_sat = 0, end_sat=100):
+            hue, sat, lum = (hue/360, 1.0, 0.25)
+            lum *= level
+
+            sat_delta = end_sat - start_sat
+            if start_sat < 0:
+                start_sat += 100
+
+            sat += i / BARS_NUMBER * sat_delta / 100
+            if sat > 1:
+                sat -= 1
+            
+            r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
+            return ((int(r * 255), int(g * 255), int(b * 255)))
+
+            
 
         if state_machine.cava_mode == "between-hues":
             get_bar_color = hue_range
