@@ -159,7 +159,7 @@ class States:
         bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
 
         def hue_range(i, level, val=1.0, start_hue = 0, end_hue=360):
-            hue, sat, val = (start_hue/360, 0.75, val)
+            hue, sat, val = (start_hue/360, 1.0, val)
             val *= level
 
             hue_delta = end_hue - start_hue
