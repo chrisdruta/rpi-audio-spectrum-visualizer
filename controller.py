@@ -179,6 +179,7 @@ class States:
 
             sat_delta = end_sat - start_sat
             sat += i / BARS_NUMBER * sat_delta / 100
+            print(sat)
             
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
             return ((int(r * 255), int(g * 255), int(b * 255)))
