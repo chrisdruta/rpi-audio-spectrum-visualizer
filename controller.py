@@ -211,7 +211,7 @@ class States:
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
                 for i, level in enumerate(sample):
                     #val = get_bar_color(i, level, lum=0.75, start_hue=340, end_hue=20)
-                    val = sat_range(i, level, lum=0.4, hue=0, start_sat = 100, end_sat=0)
+                    val = sat_range(i, level, lum=0.4, hue=151, start_sat = 100, end_sat=0)
                     state_machine.pixels[i] = val
                     state_machine.pixels[state_machine.num_pixels - 1 - i] = val
                 state_machine.pixels.show()
