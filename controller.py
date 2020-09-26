@@ -141,6 +141,8 @@ class States:
         [general]
         bars = %d
         autosens = 1
+        ; higher_cutoff_freq = 10000
+        higher_cutoff_freq = 7000
         [input]
         method = pulse
         source = echoCancel_source
