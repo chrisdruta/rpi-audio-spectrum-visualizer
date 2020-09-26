@@ -1,4 +1,6 @@
 from __future__ import annotations
+from typing import List
+
 from threading import Thread
 from queue import SimpleQueue
 
@@ -14,14 +16,12 @@ import colorsys
 import sounddevice as sd
 import numpy as np
 
-from colour import Color
-
 import board
 from adafruit_ws2801 import WS2801
 
 class StateMachine:
-    def __init__(self, initial_state: State, wait: int = 0.1):
-        self.command_queue = SimpleQueue()
+    def __init__(self, initial_state, wait: float = 0.1):
+        self.command_queue: SimpleQueue = SimpleQueue()
         self.loop_thread: Thread = Thread(target=self.loop)
         self.state_function_thread: Thread = Thread()
 
@@ -34,6 +34,8 @@ class StateMachine:
         self.pixels = WS2801(board.SCLK, board.MOSI, self.num_pixels, auto_write=False, baudrate=1000000)
         self.pixels.fill((255, 0, 0))
         self.pixels.show()
+
+        self.cava_mode = "between-hues"
 
 
     def start_loop(self):
@@ -54,10 +56,12 @@ class StateMachine:
             time.sleep(self.wait)
 
 
-class States(Enum):
+class States:
+    @staticmethod
     def _names() -> List[str]:
         return [state for state in States.__dict__.keys() if not state.startswith("_")]
 
+    @staticmethod
     def idle(state_machine: StateMachine):
 
         def wheel(pos):
@@ -84,6 +88,7 @@ class States(Enum):
             time.sleep(0.2)
         return
 
+    @staticmethod
     def pink(state_machine: StateMachine):
         hue, sat, lum = (328/360, 100/100, 11/100)
         while state_machine.current_state == States.pink:
@@ -105,6 +110,7 @@ class States(Enum):
                 state_machine.pixels.show()
         return
 
+    @staticmethod
     def custom_fft(state_machine: StateMachine):
         CHUNK = 2048
         with sd.InputStream(channels=1, samplerate=44100, blocksize=CHUNK) as stream:
@@ -122,6 +128,7 @@ class States(Enum):
                     state_machine.pixels[63-i] = (val, val, val)
                 state_machine.pixels.show()
 
+    @staticmethod
     def cava(state_machine: StateMachine):
 
         BARS_NUMBER = int(state_machine.num_pixels / 2)
@@ -150,15 +157,21 @@ class States(Enum):
         bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
 
 
-        def get_bar_color(i, level, start_hue = 0):
+        def hue_range(i, level, lum=0.25, start_hue = 0, end_hue=360):
             hue, sat, lum = (start_hue/360, 1.0, 0.25)
-            hue += i / BARS_NUMBER
             lum *= level
-            # if hue > 1:
-            #     hue -= 1
+
+            hue_delta = end_hue - start_hue
+            if hue_delta < 0:
+                hue_delta += 360
+
+            hue += i / BARS_NUMBER * hue_delta / 360
+
             r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
             return ((int(r * 255), int(g * 255), int(b * 255)))
 
+        if state_machine.cava_mode == "between-hues":
+            get_bar_color = hue_range
 
         with tempfile.NamedTemporaryFile() as config_file:
             config_file.write(config.encode())
@@ -182,9 +195,9 @@ class States(Enum):
                 # sample = [i for i in struct.unpack(fmt, data)]  # raw values without norming
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
                 for i, level in enumerate(sample):
-                    val = int(level * 255)
-                    state_machine.pixels[i] = get_bar_color(i, level, start_hue=270)
-                    state_machine.pixels[state_machine.num_pixels - 1 - i] = get_bar_color(i, level, start_hue=270)
+                    val = get_bar_color(i, level, lum=0.5, start_hue=287, end_hue=360)
+                    state_machine.pixels[i] = val
+                    state_machine.pixels[state_machine.num_pixels - 1 - i] = val
                 state_machine.pixels.show()
 
         process.terminate()
