@@ -159,7 +159,7 @@ class States:
         bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
 
         def hue_range(i, level, lum=0.25, start_hue = 0, end_hue=360):
-            hue, sat, lum = (start_hue/360, 0.5, lum)
+            hue, sat, lum = (start_hue/360, 1.0, lum)
             lum *= level
 
             hue_delta = end_hue - start_hue
@@ -211,7 +211,7 @@ class States:
                 # sample = [i for i in struct.unpack(fmt, data)]  # raw values without norming
                 sample = [i / bytenorm for i in struct.unpack(fmt, data)]
                 for i, level in enumerate(sample):
-                    val = get_bar_color(i, level, lum=1.0, start_hue=0, end_hue=180)
+                    val = get_bar_color(i, level, lum=0.5, start_hue=0, end_hue=180)
                     #val = sat_range(i, level, lum=0.25, hue=250, start_sat = 100, end_sat=0)
                     state_machine.pixels[i] = val
                     state_machine.pixels[state_machine.num_pixels - 1 - i] = val
