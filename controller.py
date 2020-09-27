@@ -154,6 +154,12 @@ class States:
         bit_format = %s
         [smoothing]
         gravity = 100
+        [eq]
+        1=2
+        2=1
+        3=1
+        4=1
+        5=1
         """
         config = conpat % (BARS_NUMBER, RAW_TARGET, OUTPUT_BIT_FORMAT)
         bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
