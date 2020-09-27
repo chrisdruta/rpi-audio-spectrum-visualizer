@@ -111,11 +111,11 @@ def cava(state_machine: StateMachine):
     config = conpat % (BARS_NUMBER, RAW_TARGET, OUTPUT_BIT_FORMAT)
     bytetype, bytesize, bytenorm = ('H', 2, 65535) if OUTPUT_BIT_FORMAT == '16bit' else ('B', 1, 255)
 
-    def hue_range(i, level, val=1.0, start_hue = 0, end_hue=360):
-        hue, sat, val = (start_hue/360, 0.9, val)
+    def hue_range(i, level, val=1.0, sat=100, start=0, end=360):
+        hue, sat, val = (start/360, sat/100, val)
         val *= level
 
-        hue_delta = end_hue - start_hue
+        hue_delta = end - start
         if hue_delta < 0:
             hue_delta += 360
 
@@ -125,15 +125,14 @@ def cava(state_machine: StateMachine):
         r, g, b = colorsys.hsv_to_rgb(hue, sat, val)
         return ((int(r * 255), int(g * 255), int(b * 255)))
 
-    def sat_range(i, level, lum=0.25, hue=0, start_sat = 130, end_sat=0):
-        hue, sat, lum = (hue/360, start_sat/100, lum)
-        lum *= level
+    def sat_range(i, level, val=1.0, hue=0, start=100, end=90):
+        hue, sat, val = (hue/360, start/100, val)
+        val *= level
 
-        sat_delta = end_sat - start_sat
+        sat_delta = end - start
         sat += i / BARS_NUMBER * sat_delta / 100
-        print(sat)
         
-        r, g, b = colorsys.hls_to_rgb(hue, lum, sat)
+        r, g, b = colorsys.hsv_to_rgb(hue, sat, val)
         return ((int(r * 255), int(g * 255), int(b * 255)))
 
     if state_machine.cava_mode == "between-hues":
@@ -161,8 +160,8 @@ def cava(state_machine: StateMachine):
             # sample = [i for i in struct.unpack(fmt, data)]  # raw values without norming
             sample = [i / bytenorm for i in struct.unpack(fmt, data)]
             for i, level in enumerate(sample):
-                val = get_bar_color(i, level, val=1.0, start_hue=0, end_hue=360)
-                #val = sat_range(i, level, lum=0.25, hue=250, start_sat = 100, end_sat=0)
+                #val = get_bar_color(i, level, val=1.0, start_hue=0, end_hue=360)
+                val = sat_range(i, level, val=0.5, hue=0, start=100, end=90)
                 state_machine.pixels[i] = val
                 state_machine.pixels[state_machine.num_pixels - 1 - i] = val
             state_machine.pixels.show()
