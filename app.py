@@ -4,7 +4,8 @@ from prometheus_flask_exporter import PrometheusMetrics
 
 from threading import Thread
 
-from controller import StateMachine, States
+from controller import StateMachine
+import states as States
 
 state_machine = StateMachine(initial_state=States.cava)
 state_machine.start_loop()
@@ -29,7 +30,7 @@ def get_status():
 def change_mode(mode: str):
     if not mode:
         return Response("Missing mode in uri path (/controller/mode/<mode>)")
-    if mode in States._names():
+    if mode in dir(States):
         state_machine.command_queue.put(States.__dict__[mode])
         # if mode == 'cava' and body := request.json():
         #     print(body)
