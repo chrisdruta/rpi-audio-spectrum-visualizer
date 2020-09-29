@@ -160,8 +160,8 @@ def cava(state_machine: StateMachine):
             # sample = [i for i in struct.unpack(fmt, data)]  # raw values without norming
             sample = [i / bytenorm for i in struct.unpack(fmt, data)]
             for i, level in enumerate(sample):
-                #val = get_bar_color(i, level, val=1.0, start_hue=0, end_hue=360)
-                val = sat_range(i, level, val=0.5, hue=0, start=100, end=80)
+                val = get_bar_color(i, level, val=1.0, start_hue=0, end_hue=360)
+                #val = sat_range(i, level, val=1.0, hue=0, start=100, end=80)
                 state_machine.pixels[i] = val
                 state_machine.pixels[state_machine.num_pixels - 1 - i] = val
             state_machine.pixels.show()
