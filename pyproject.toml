@@ -7,8 +7,17 @@ authors = ["Your Name <you@example.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Flask = "^1.1.2"
+wheel = "^0.35.1"
+prometheus-flask-exporter = "^0.17.0"
+flask-cors = "^3.0.9"
+numpy = "^1.19.2"
+sounddevice = "^0.4.0"
+colour = "^0.1.5"
+Adafruit-Blinka = "^5.4.0"
+adafruit-circuitpython-busdevice = "^5.0.1"
 
 [tool.poetry.dev-dependencies]
+mypy = "^0.782"
 
 [build-system]
 requires = ["poetry>=0.12"]
